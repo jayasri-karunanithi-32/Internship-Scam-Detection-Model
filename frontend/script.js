@@ -3,7 +3,7 @@
  * Handles tab switching, input handling, API calls, and result display.
  */
 
-const API_BASE_URL = "http://localhost:8000";
+const API_BASE_URL = "";
 
 let currentTab = "text";
 let selectedFile = null;
