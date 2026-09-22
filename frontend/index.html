@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internship Scam Detection</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            <path d="M9 12l2 2 4-4"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1>Internship Scam Detection</h1>
+                        <p class="subtitle">AI-Powered Fraud Analysis using NLP &amp; Machine Learning</p>
+                    </div>
+                </div>
+                <div class="header-badge">
+                    <span class="badge-dot"></span>
+                    <span>Model Active</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Input Section -->
+            <section class="input-section">
+                <h2 class="section-title">Submit Internship Details</h2>
+                <p class="section-desc">Choose an input method to analyze an internship opportunity</p>
+
+                <!-- Tab Navigation -->
+                <div class="tab-nav">
+                    <button class="tab-btn active" data-tab="text" onclick="switchTab('text')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                            <polyline points="10 9 9 9 8 9"/>
+                        </svg>
+                        Text Description
+                    </button>
+                    <button class="tab-btn" data-tab="url" onclick="switchTab('url')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                        </svg>
+                        URL Link
+                    </button>
+                    <button class="tab-btn" data-tab="image" onclick="switchTab('image')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21 15 16 10 5 21"/>
+                        </svg>
+                        Image / Poster
+                    </button>
+                </div>
+
+                <!-- Tab Content -->
+                <div class="tab-content">
+                    <!-- Text Input -->
+                    <div class="tab-pane active" id="tab-text">
+                        <textarea id="text-input" 
+                            placeholder="Paste the internship description here...&#10;&#10;Example: 'Software Engineering Intern at Google. Requirements: Currently pursuing BS/MS in Computer Science. Strong programming skills in Python or Java. Duration: 12 weeks. Paid internship.'"
+                            rows="8"></textarea>
+                    </div>
+
+                    <!-- URL Input -->
+                    <div class="tab-pane" id="tab-url">
+                        <div class="url-input-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="2" y1="12" x2="22" y2="12"/>
+                                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                            </svg>
+                            <input type="url" id="url-input" 
+                                placeholder="https://example.com/internship-posting">
+                        </div>
+                        <p class="input-hint">Enter the URL of an internship posting to scrape and analyze its content</p>
+                    </div>
+
+                    <!-- Image Input -->
+                    <div class="tab-pane" id="tab-image">
+                        <div class="upload-area" id="upload-area" onclick="document.getElementById('image-input').click()">
+                            <input type="file" id="image-input" accept="image/*" hidden onchange="handleFileSelect(event)">
+                            <div class="upload-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="48" height="48">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="17 8 12 3 7 8"/>
+                                    <line x1="12" y1="3" x2="12" y2="15"/>
+                                </svg>
+                            </div>
+                            <p class="upload-text">Click to upload or drag and drop</p>
+                            <p class="upload-hint">PNG, JPG, GIF, BMP, WEBP up to 10MB</p>
+                        </div>
+                        <div class="file-preview" id="file-preview" style="display: none;">
+                            <img id="preview-image" src="" alt="Preview">
+                            <div class="file-info">
+                                <span id="file-name"></span>
+                                <button class="remove-file" onclick="removeFile()">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analyze Button -->
+                <button class="analyze-btn" id="analyze-btn" onclick="analyzeInput()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                    Analyze
+                </button>
+            </section>
+
+            <!-- Loading State -->
+            <section class="loading-section" id="loading-section" style="display: none;">
+                <div class="loading-spinner">
+                    <div class="spinner"></div>
+                    <p>Analyzing internship posting...</p>
+                    <p class="loading-sub">Running NLP preprocessing and ML classification</p>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section" id="results-section" style="display: none;">
+                <h2 class="section-title">Analysis Results</h2>
+
+                <!-- Result Card -->
+                <div class="result-card" id="result-card">
+                    <div class="result-header" id="result-header">
+                        <div class="result-icon" id="result-icon"></div>
+                        <div class="result-info">
+                            <h3 id="result-label"></h3>
+                            <p id="result-model-info"></p>
+                        </div>
+                        <div class="confidence-ring" id="confidence-ring">
+                            <svg viewBox="0 0 120 120">
+                                <circle class="ring-bg" cx="60" cy="60" r="52" />
+                                <circle class="ring-fill" id="ring-fill" cx="60" cy="60" r="52" />
+                            </svg>
+                            <div class="confidence-text">
+                                <span class="confidence-value" id="confidence-value">0</span>
+                                <span class="confidence-label">Confidence</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Explanation Card -->
+                <div class="explanation-card" id="explanation-card">
+                    <h3>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="12" y1="16" x2="12" y2="12"/>
+                            <line x1="12" y1="8" x2="12.01" y2="8"/>
+                        </svg>
+                        Step-by-Step Explanation
+                    </h3>
+                    <div class="explanation-content" id="explanation-content"></div>
+                </div>
+
+                <!-- Processing Steps Card -->
+                <div class="steps-card" id="steps-card">
+                    <h3>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                        </svg>
+                        NLP Processing Details
+                    </h3>
+                    <div class="steps-grid" id="steps-grid"></div>
+                </div>
+
+                <!-- New Analysis Button -->
+                <button class="new-analysis-btn" onclick="resetAnalysis()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                        <polyline points="1 4 1 10 7 10"/>
+                        <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+                    </svg>
+                    New Analysis
+                </button>
+            </section>
+
+            <!-- Error Section -->
+            <section class="error-section" id="error-section" style="display: none;">
+                <div class="error-card">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="48" height="48">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="15" y1="9" x2="9" y2="15"/>
+                        <line x1="9" y1="9" x2="15" y2="15"/>
+                    </svg>
+                    <h3>Analysis Failed</h3>
+                    <p id="error-message"></p>
+                    <button class="retry-btn" onclick="resetAnalysis()">Try Again</button>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Internship Scam Detection Model &mdash; Powered by NLP &amp; Machine Learning</p>
+            <p class="footer-sub">Built with FastAPI, scikit-learn, NLTK, and TF-IDF</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
