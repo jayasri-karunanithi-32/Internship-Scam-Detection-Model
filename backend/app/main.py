@@ -10,7 +10,7 @@ import sys
 
 from fastapi import FastAPI, File, Form, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 
 # Add backend directory to path
@@ -38,13 +38,12 @@ app.add_middleware(
 # Serve frontend static files
 frontend_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "frontend")
 if os.path.exists(frontend_dir):
-    app.mount("/static", StaticFiles(directory=frontend_dir), name="static")
-
+    pass
+    
 
 @app.get("/")
 async def root():
-    """Health check endpoint."""
-    return {"status": "ok", "message": "Internship Scam Detection API is running"}
+    return FileResponse(os.path.join(frontend_dir, "index.html"))
 
 
 @app.get("/api/health")
@@ -164,3 +163,5 @@ async def analyze_image(file: UploadFile = File(...)):
             status_code=500,
             content={"error": f"Image analysis failed: {str(e)}"},
         )
+
+app.mount("/", StaticFiles(directory=frontend_dir, html=True), name="frontend")
