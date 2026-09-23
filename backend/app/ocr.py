@@ -11,6 +11,7 @@ from unittest import result
 
 from rapidocr_onnxruntime import RapidOCR
 from PIL import Image
+import numpy as np
 
 
 def extract_text_from_image(image_bytes: bytes) -> str:
@@ -36,6 +37,7 @@ def extract_text_from_image(image_bytes: bytes) -> str:
         image = image.convert("RGB")
 
     ocr = RapidOCR()
+    image = np.array(image)
     result, _ = ocr(image)
     text = "\n".join([item[1] for item in result]) if result else ""
 
