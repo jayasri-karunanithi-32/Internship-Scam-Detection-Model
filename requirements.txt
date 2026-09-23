@@ -13,3 +13,4 @@ numpy>=1.24.0
 joblib>=1.3.0
 rapidocr
 onnxruntime
+rapidocr_onnxruntime
