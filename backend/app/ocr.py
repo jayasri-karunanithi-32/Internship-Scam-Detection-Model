@@ -5,9 +5,11 @@ Uses Tesseract OCR to extract text from uploaded
 internship poster images.
 """
 
+from email.mime import image
 import io
+from unittest import result
 
-import pytesseract
+from rapidocr_onnxruntime import RapidOCR
 from PIL import Image
 
 
@@ -33,7 +35,9 @@ def extract_text_from_image(image_bytes: bytes) -> str:
     if image.mode not in ("L", "RGB"):
         image = image.convert("RGB")
 
-    text = pytesseract.image_to_string(image)
+    ocr = RapidOCR()
+    result, _ = ocr(image)
+    text = "\n".join([item[1] for item in result]) if result else ""
 
     if not text.strip():
         raise ValueError(
